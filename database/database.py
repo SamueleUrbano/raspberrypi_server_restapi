@@ -12,8 +12,13 @@ class Database:
 
     DATABASE = 'database/database.db'
     TABLES   = [
+        'access',
         'door',
-        'badge'
+        'badge',
+        'user',
+
+        'log_access',
+        'log_user'
     ]
 
     def __init__( self ):
@@ -32,13 +37,10 @@ class Database:
             try:
                 print( f'@Debug: Creating "{ table }" table...' )
 
-                if table == 'door':
-                    self.cursor.execute( self.resource_manager.get_create_table_query( table_name = table ) )
-                    self.connection.commit()
-                
-                elif table == 'badge':
-                    self.cursor.execute( self.resource_manager.get_create_table_query( table_name = table ) )
-                    self.connection.commit()
+                self.cursor.execute( self.resource_manager.get_create_table_query( table_name = table ) )
+                self.connection.commit()
 
             except Exception as exception:
                 print( f'@Debug: exception = {exception}' )
+
+    
