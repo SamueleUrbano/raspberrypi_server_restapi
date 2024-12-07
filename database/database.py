@@ -12,7 +12,7 @@ class Database:
 
     DATABASE = 'database/database.db'
     TABLES   = [
-        'person',
+        'door',
         'badge'
     ]
 
@@ -26,17 +26,19 @@ class Database:
 
     
     def init_database( self ):
-        query = 'SELECT name FROM sqlite_master WHERE type = "table"'
 
-        result = self.cursor.execute( query ).fetchall()
-        print( '@Debug: result = ' + str( result ) )
+        for table in self.TABLES:
 
-        if not result:
-            for table in self.TABLES:
+            try:
+                print( f'@Debug: Creating "{ table }" table...' )
+
+                if table == 'door':
+                    self.cursor.execute( self.resource_manager.get_create_table_query( table_name = table ) )
+                    self.connection.commit()
                 
-                if table == 'person':
-                    print( f'@Debug: Creating "{ table }" table executing query = { self.resource_manager.get_table_query( table_name=table ) }' )
-                    ## self.cursor.execute( self.resource_manager.get_table_query( table_name=table ) )
-
                 elif table == 'badge':
-                    print( f'@Debug: Creating "{ table }" table...' )
+                    self.cursor.execute( self.resource_manager.get_create_table_query( table_name = table ) )
+                    self.connection.commit()
+
+            except Exception as exception:
+                print( f'@Debug: exception = {exception}' )

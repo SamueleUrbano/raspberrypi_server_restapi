@@ -12,7 +12,7 @@ class ResourceManager:
         self.parser = configparser.ConfigParser()
 
 
-    def get_table_query( self, table_name ):
+    def get_create_table_query( self, table_name ):
         self.parser.read( self.INI_FILE )
 
         if 'TABLES' in self.parser and table_name in self.parser['TABLES']:
