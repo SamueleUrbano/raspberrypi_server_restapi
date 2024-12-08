@@ -20,5 +20,11 @@ class ResourceManager:
         else:
             raise Exception( Labels.CORRUPTED_CONFIGURATION_FILE_EXCEPTION.value )
     
-    def get_record_query( self, operation, target ):
-        pass
+    def get_record_query( self, table, statement ):
+        self.parser.read( self.INI_FILE )
+
+        if table == 'BADGE':
+            if 'BADGE' in self.parser and statement in self.parser['BADGE']:
+                return self.parser.get( table, statement )
+            else:
+                raise Exception( Labels.CORRUPTED_CONFIGURATION_FILE_EXCEPTION.value )

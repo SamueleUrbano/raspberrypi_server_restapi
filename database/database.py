@@ -42,5 +42,3 @@ class Database:
 
             except Exception as exception:
                 print( f'@Debug: exception = {exception}' )
-
-    
